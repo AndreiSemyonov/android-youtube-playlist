@@ -8,9 +8,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
-    val fragmentTitleArray = arrayOf("YouTube", "Playlist")
+    private val fragmentTitleArray = arrayOf("YouTube", "Playlist")
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -15,7 +15,10 @@ import com.andreisemyonov.youtubeplaylist.db.PlayListRepository
 import com.andreisemyonov.youtubeplaylist.db.Video
 import com.andreisemyonov.youtubeplaylist.viewholders.PlaylistFragmentViewHolder
 import com.bumptech.glide.Glide
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class PlaylistFragment: Fragment() {
 
@@ -59,6 +62,12 @@ class PlaylistFragment: Fragment() {
                     viewHolderBinding.contentView.setOnClickListener{
                         Toast.makeText(requireActivity(), playlist[position].title, Toast.LENGTH_LONG).show()
                     }
+
+                    viewHolderBinding.delete.setOnClickListener{
+
+                        video = Video(playlist[position].url, playlist[position].title, playlist[position].description)
+                        deleteVideo(video!!)
+                    }
                 }
             }
 
@@ -67,8 +76,35 @@ class PlaylistFragment: Fragment() {
             }
         }
 
+        loadPlaylist()
+
         binding.recyclerView.adapter = playlistFragmentAdapter
 
         return binding.root
+    }
+
+    private fun loadPlaylist() {
+        compositeDisposable.add(playlistRepository!!.getPlaylist()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { playlist -> getVideo(playlist) })
+    }
+
+    private fun getVideo(list: List<Video>) {
+        playlist.clear()
+        playlist.addAll(list)
+        playlistFragmentAdapter?.notifyDataSetChanged()
+    }
+
+    private fun deleteVideo(video: Video) {
+        compositeDisposable.add(Observable.create<Any> { playlistRepository?.deleteVideo(video) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
     }
 }

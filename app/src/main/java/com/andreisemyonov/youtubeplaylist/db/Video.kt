@@ -14,6 +14,6 @@ data class Video (
     @ColumnInfo(name = "title")
     var title: String,
 
-    @ColumnInfo(name = "decription")
+    @ColumnInfo(name = "description")
     var description: String
 )

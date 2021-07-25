@@ -14,7 +14,4 @@ interface ItemDAO {
 
     @Delete
     fun delete(video: Video)
-
-    @Query("DELETE FROM videos")
-    fun deleteAll()
 }
