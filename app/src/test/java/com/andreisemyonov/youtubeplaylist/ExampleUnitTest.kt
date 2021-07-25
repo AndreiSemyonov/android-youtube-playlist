@@ -1,4 +1,4 @@
-package com.andreisemyonov.androidyoutube
+package com.andreisemyonov.youtubeplaylist
 
 import org.junit.Test
 

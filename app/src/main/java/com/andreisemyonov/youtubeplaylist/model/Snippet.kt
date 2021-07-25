@@ -1,4 +1,4 @@
-package com.andreisemyonov.androidyoutube.model
+package com.andreisemyonov.youtubeplaylist.model
 
 import com.google.gson.annotations.SerializedName
 

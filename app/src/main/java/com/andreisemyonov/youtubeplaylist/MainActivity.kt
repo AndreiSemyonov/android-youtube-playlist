@@ -1,9 +1,9 @@
-package com.andreisemyonov.androidyoutube
+package com.andreisemyonov.youtubeplaylist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.andreisemyonov.androidyoutube.adapter.ViewPagerAdapter
-import com.andreisemyonov.androidyoutube.databinding.ActivityMainBinding
+import com.andreisemyonov.youtubeplaylist.databinding.ActivityMainBinding
+import com.andreisemyonov.youtubeplaylist.adapter.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -15,8 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         val viewPager = binding.viewPager
         val tabLayout = binding.tabLayout
@@ -24,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = fragmentTitleArray[position]
+        TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = fragmentTitleArray[position]
         }.attach()
     }
 }
